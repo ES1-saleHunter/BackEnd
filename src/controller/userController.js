@@ -2,7 +2,7 @@ const db = require("../connection/connectionbd");
 const usermodel = require("../models/userModel");
 const brcypt = require("bcrypt");
 
-const register = async (req,res) => {
+const register = async (req,res,next) => {
     db.sync();
     const user = req.body;
     brcypt.hash(user.password, 10, async (errBrcypt, hash) =>{
@@ -14,13 +14,10 @@ const register = async (req,res) => {
             state: true,
             password: hash
         }).then(
-            res.status(200).send({
-                mensagem: "user criado com sucesso",
-                email: user.email
-            })
+            next()
         )
         .catch((error) => {
-          //console.log(error);
+            console.log(error);
         });
        });    
 };
