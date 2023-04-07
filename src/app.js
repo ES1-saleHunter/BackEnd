@@ -1,10 +1,8 @@
 const express = require("express");
-const routerexemplo= require("./router/rotaexemplo");
 const morgan = require("morgan");
 const bodyparser = require("body-parser");
-
 const app = express();
-
+const userRoute= require("./router/userRoute");
 
 // defindindo um padrão
 app.use(morgan('dev'));
@@ -12,9 +10,9 @@ app.use(bodyparser.urlencoded({ extended: false}));
 app.use(bodyparser.json());
 app.use(express.json());
 
-//rotas
-app.use(routerexemplo);
 
+//rotas
+app.use(userRoute);
 
 
 
