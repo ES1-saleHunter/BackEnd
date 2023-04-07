@@ -6,7 +6,7 @@ const emailController = require("../controller/emailController");
 
 
 
-router.post("/register",userMiddleware.parameter_empty_check, userMiddleware.duplicate_email, userController.register, emailController.registration_email);
+router.post("/register",userMiddleware.parameter_empty_check, userMiddleware.duplicate_email, emailController.registration_email, userController.register);
 
 
 module.exports = router;

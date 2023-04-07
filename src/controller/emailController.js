@@ -1,7 +1,7 @@
 const emailsend = require("../connection/connectionEmail");
 
 
-const registration_email = async (req,res) =>{
+const registration_email = async (req,res, next) =>{
     const {email , name} = req.body;
     await emailsend.sendMail({
         from: "SaleHunter <es1salehunter@gmail.com>",
@@ -10,13 +10,14 @@ const registration_email = async (req,res) =>{
         html: `<h1>Cadastro Concluido, </h1> <p> <strong>${name}<strong>  Seu cadastro em <strong>SaleHunter<strong>  foi concluido com sucesso`,
         text: "${name} Seu cadastro em <strong> SaleHunter foi concluido com sucesso"
     }).then(()=>{
-        console.log("email enviado");
-        res.status(200).send({
-            mensagem: "usuario criado com sucesso",
-            email: email
-        })     
+        console.log("email enviado");    
+        next();
     }).catch((error)=>{
-        console.log("email erro", error);
+        res.status(400).send({
+            Mensagem : "email invalido",
+            error: error
+        });
+
     })
 }
 
