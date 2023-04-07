@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql
+    restart: unless-stopped
+    expose:
+      - "3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=salehunter
+    ports:
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
+volumes: 
+  db:
