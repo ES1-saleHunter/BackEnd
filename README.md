@@ -54,14 +54,13 @@ Com isso o sistema já vai estar rodando em http://localhost:3000
 ## /register
 Utilizado para cadastrar um usuarios 
 
-Dados esperado pelo endpoint
+Dados esperado
 ```
 um JSON:
 
 {
-    "name":"username" - string
+	"name":"username" - string
 	"email": "useremail" - string
 	"password": "usersenha" - string
-	"isadm":"userADM" - boolean
 }
 ```

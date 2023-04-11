@@ -10,7 +10,7 @@ const register = async (req,res) => {
             const newuser = await usermodel.create({
             name: user.name,
             email: user.email,
-            isadm: user.isadm,
+            isadm: false,
             state: true,
             password: hash
         }).then(
