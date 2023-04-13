@@ -3,7 +3,6 @@ const usermodel = require("../models/userModel");
 const brcypt = require("bcrypt");
 
 const register = async (req,res) => {
-    db.sync();
     const user = req.body;
     brcypt.hash(user.password, 10, async (errBrcypt, hash) =>{
         if(errBrcypt){return ({error: errBrcypt})};
