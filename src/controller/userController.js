@@ -13,19 +13,55 @@ const register = async (req,res) => {
             state: true,
             password: hash
         }).then(
-            res.status(200).send({
+             res.status(200).send({
                 mensagem: "usuario criado com sucesso",
                 email: user.email
             })           
         )
         .catch((error) => {
-            console.log(error);
+            res.status(400).send({
+                mensagem: "ERRO",
+                error: error
+            })  
+        
         });
        });    
 };
 
+const login = async (req,res) => {
+    const {email, password} = req.body;
+    const user = await usermodel.findOne({where: {email: email}}
+        ).then().catch((error) => {
+            return res.status(400).send({
+                mensagem: "ERRO - Falha login",
+                error: error
+            })  
+        });
+        if(user === null) return res.status(400).send({mensagem: "ERRO - Falha login"}) 
+        brcypt.compare(password, user.password, (error, result) => {
+            console.log(`senha passada ${password} senha salva ${user}`)
+            if(error) {
+               return res.status(400).send({
+                    mensagem: "ERRO - Falha login",
+                    error: error
+                }) 
+            }
+            if(result){
+               return res.status(200).send({
+                    mensagem: "Autenticado com sucesso",
+                    email: user.email
+                })  
+            }
+            return res.status(400).send({
+                mensagem: "ERRO - Falha login",
+                error: error
+            }) 
+        }
+        );
 
+};
 
 module.exports = {
-    register
+    register,
+    login
 }
