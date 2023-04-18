@@ -1,6 +1,8 @@
 const db = require("../connection/connectionbd");
 const usermodel = require("../models/userModel");
+require("dotenv").config();
 const brcypt = require("bcrypt");
+const jwtoken =require("jsonwebtoken");
 
 const register = async (req,res) => {
     const user = req.body;
@@ -29,7 +31,7 @@ const register = async (req,res) => {
 };
 
 const login = async (req,res) => {
-    const {email, password} = req.body;
+    const {email, password, name} = req.body;
     const user = await usermodel.findOne({where: {email: email}}
         ).then().catch((error) => {
             return res.status(400).send({
@@ -47,9 +49,17 @@ const login = async (req,res) => {
                 }) 
             }
             if(result){
+                const token = jwtoken.sign({
+                    email: email,
+                    name: name
+                },process.env.JWT_KEY,{
+
+                    expiresIn: "2h"
+                })
                return res.status(200).send({
                     mensagem: "Autenticado com sucesso",
-                    email: user.email
+                    email: user.email,
+                    token: token
                 })  
             }
             return res.status(400).send({
