@@ -21,6 +21,10 @@ const user = connecttion.define("user", {
             type: sequelize.STRING,
             allowNull: false
         },
+        passwordResetToken: {
+            type: sequelize.STRING,
+            allowNull: false,
+        },
         isadm:{
             type: sequelize.BOOLEAN,
             allowNull: false
