@@ -77,3 +77,29 @@ um JSON:
 	"password": "usersenha" - string
 }
 ```
+
+
+## /login
+Utilizado para login do usuarios 
+
+Dados esperado
+```
+um JSON:
+
+{
+	"email": "useremail" - string
+	"password": "usersenha" - string
+}
+```
+
+
+## /recoverpassword
+Utilizado para recuperar a senha do usuarios 
+
+Dados esperado
+```
+um JSON:
+{
+	"email": "useremail" - string
+}
+```
