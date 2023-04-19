@@ -16,7 +16,6 @@ const register = async (req,res) => {
             isadm: false,
             state: true,
             password: hash,
-            passwordResetToken: ''
         }).then(
              res.status(200).send({
                 mensagem: "usuario criado com sucesso",
@@ -92,16 +91,6 @@ const rec_password = async (req,res) => {
         },process.env.JWT_KEY,{
             expiresIn: "2h"
         })
- 
-            const updateUser = await usermodel.update(
-            {
-                passwordResetToken: token
-    
-            },
-            {
-              where: {email: email},
-            }
-          );
 
 
         await nodemailer.rec_password(req,user.name,res,token);
@@ -111,9 +100,58 @@ const rec_password = async (req,res) => {
         })        
 };
 
+const reset_password = async (req,res) => {
+    const {email, token, password} = req.body;
+        
+        if(email == "") return res.status(400).send({mensage: "email do usuario não informado"}); 
+        const user = await usermodel.findOne({where: {email: email}}
+        ).then().catch((error) => {
+            return res.status(400).send({
+                mensagem: "ERRO - Falha",
+                error: error
+            })  
+        });
+        if(user === null) return res.status(400).send({mensagem: "ERRO - Falha"}) 
+        const decodedToken = jwtoken.decode(token, {
+            complete: true
+           });
+        if(!decodedToken) return res.status(400).send({mensage: "Erro - Token invalido"}); 
+        console.log(decodedToken.payload.email);
+        if(!(decodedToken.payload.email === email)) return res.status(400).send({mensage: "Erro - token invalido ou expirado"});
+        
+        brcypt.hash(password, 10, async (errBrcypt, hash) =>{
+            if(errBrcypt){return ({error: errBrcypt})};
+                
+            const updateUser = await usermodel.update(
+                {
+                    password: hash
+                },
+                {
+                  where: {email: email},
+                }
+              ).then(
+                await nodemailer.reset_password(req,user.name,res,token),
+                res.status(200).send({
+                    mensagem: "Senha alterada com sucesso"
+                })        
+            )
+            .catch((error) => {
+                res.status(400).send({
+                    mensagem: "ERRO",
+                    error: error
+                })  
+            
+            });
+           });    
+     
+        
+            
+};
+
 
 module.exports = {
     register,
     login,
-    rec_password
+    rec_password,
+    reset_password
 }

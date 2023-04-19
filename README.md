@@ -103,3 +103,16 @@ um JSON:
 	"email": "useremail" - string
 }
 ```
+
+## /resetpassword
+Utilizado para recuperar a senha do usuarios 
+
+Dados esperado
+```
+um JSON:
+{
+	"email": "useremail" - string
+	"token": "usertoken" - string
+	"password": "userpassword" - string
+}
+```
