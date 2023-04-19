@@ -53,7 +53,6 @@ const login = async (req,res) => {
                     email: email,
                     name: name
                 },process.env.JWT_KEY,{
-
                     expiresIn: "2h"
                 })
                return res.status(200).send({
