@@ -21,8 +21,8 @@ const registration_email = async (req,res, next) =>{
     })
 }
 
-const rec_password = async (req,res,token) =>{
-    const {email , name} = req.body;
+const rec_password = async (req,name,res,token) =>{
+    const {email} = req.body;
     await emailsend.sendMail({
         from: "SaleHunter <es1salehunter@gmail.com>",
         to: email,

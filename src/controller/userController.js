@@ -77,7 +77,7 @@ const login = async (req,res) => {
 
 
 const rec_password = async (req,res) => {
-    const {email, name} = req.body;
+    const {email} = req.body;
     if(email == "") return res.status(400).send({mensage: "email do usuario não informado"}); 
     const user = await usermodel.findOne({where: {email: email}}
         ).then().catch((error) => {
@@ -89,7 +89,6 @@ const rec_password = async (req,res) => {
         if(user === null) return res.status(400).send({mensagem: "ERRO - Falha"}) 
         const token = jwtoken.sign({
             email: email,
-            name: name
         },process.env.JWT_KEY,{
             expiresIn: "2h"
         })
@@ -105,7 +104,7 @@ const rec_password = async (req,res) => {
           );
 
 
-        await nodemailer.rec_password(req,res,token);
+        await nodemailer.rec_password(req,user.name,res,token);
         return res.status(200).send({
             mensagem: "Email enviado para recuperação da senha",
             token: token
