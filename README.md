@@ -90,7 +90,7 @@ um JSON:
 ```
 
 ## /resetpassword
-Utilizado para recuperar a senha do usuarios 
+Utilizado para resetar a senha do usuarios 
 
 Dados esperado
 ```
