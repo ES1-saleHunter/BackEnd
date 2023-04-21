@@ -10,13 +10,10 @@ const parameter_empty_check_register = async (req,res,next) => {
         if (!req.body.describe) return res.send({mensage: "Descrição da game não informada"});
         if (!req.body.name) return res.send({mensage: "Nome da game não informada"});
         if (!req.body.link) return res.send({mensage: "Link da game não informada"});
-        if (!req.body.price) return res.send({mensage: "preço da game não informada"});
 
         if(game.name == "") return res.status(400).send({mensage: "Nome da game não informada"}); 
         if(game.email == "") return res.status(400).send({mensage: "Descrição da game não informada"}); 
         if(game.link == "") return res.status(400).send({mensage: "Link da game não informada"}); 
-        if (game.price == "") return res.send({mensage: "preço da game não informada"});
-        if(game.price.match(/^-?\d+\.\d+$/) === null) return res.send({mensage: 'preço incorreto'});
         next();
 } 
 const duplicate_game = async (req,res,next) => {

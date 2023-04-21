@@ -45,6 +45,7 @@ store.belongsToMany(game, {
         model: gamestore
     },
     foreignKey: "idstore",
+    
     constraint: true
 }),
 store.hasMany(gamestore, {foreignKey: "idstore"});

@@ -121,7 +121,7 @@ um JSON:
 Type: <strong>POST</strong>
 
 ## /registerstore
-Utilizado para resetar a senha do usuarios 
+Utilizado para cadastrar uma loja
 
 Dados esperado
 ```
@@ -138,7 +138,7 @@ um form-data:
 
 Type: <strong>POST</strong>
 
-Utilizado para resetar a senha do usuarios 
+Utilizado para selecionar uma unica loja 
 
 Dados esperado
 ```
@@ -149,7 +149,7 @@ um JSON:
 ```
 
 ## /getallstore
-Utilizado para resetar a senha do usuarios 
+Utilizado para selecionar todas as loja 
 
 Type: <strong>GET</strong> 
 
@@ -159,7 +159,7 @@ NULL
 ```
 
 ## /updatestore
-Utilizado para resetar a senha do usuarios 
+Utilizado para atualizar os dados da loja
 
 Type: <strong>PUT</strong> 
 
@@ -175,7 +175,7 @@ um form-data:
 ```
 
 ## /deletestore
-Utilizado para resetar a senha do usuarios 
+Utilizado para deletar a loja
 
 Type: <strong>DELETE</strong> 
 
@@ -189,7 +189,7 @@ Dados esperado
 Type: <strong>POST</strong>
 
 ## /registergame
-Utilizado para resetar a senha do usuarios 
+Utilizado para cadastrar um jogo
 
 Dados esperado
 ```
@@ -197,7 +197,6 @@ um form-data:
 
 "name": "namegame" - string
 "describe": "describregame" - string
-"price": "pricegame" - float (10.00)
 "link": "linkgame" - string
 "image": "logogame" - file(png/jpeg)
 
@@ -207,7 +206,7 @@ um form-data:
 
 Type: <strong>POST</strong>
 
-Utilizado para resetar a senha do usuarios 
+Utilizado para selecionar um unico jogo
 
 Dados esperado
 ```
@@ -218,7 +217,7 @@ um JSON:
 ```
 
 ## /getallgame
-Utilizado para resetar a senha do usuarios 
+Utilizado para selecionar todas os jogos
 
 Type: <strong>GET</strong> 
 
@@ -228,7 +227,7 @@ NULL
 ```
 
 ## /updategame
-Utilizado para resetar a senha do usuarios 
+Utilizado para atualizar um jogo 
 
 Type: <strong>PUT</strong> 
 
@@ -239,13 +238,12 @@ um form-data:
 "name": "namegame" - string
 "newname": "namegame" - string
 "describe": "describregame" - string
-"price": "pricegame" - float (10.00)
 "link": "linkgame" - string
 "image": "logogame" - file(png/jpeg)
 ```
 
 ## /deletegame
-Utilizado para resetar a senha do usuarios 
+Utilizado para deletar um jogo 
 
 Type: <strong>DELETE</strong> 
 
@@ -254,3 +252,65 @@ Dados esperado
 um JSON:
 "name": "namegame" - string
 ```
+
+
+# Relação game com jogo
+
+
+## /relationgametostores
+
+Type: <strong>POST</strong>
+
+Utilizado para relacionar um jogo a varias lojas 
+
+Dados esperado
+```
+um JSON:
+
+"game": "namegame" - string
+"store": "namestore" - string (pode ser passado varias lojas em um array)
+
+```
+
+## /relationstoretogames
+
+Type: <strong>POST</strong>
+
+Utilizado para relacionar uma loja a varias jogos 
+
+Dados esperado
+```
+um JSON:
+
+"game": "name game" - string (pode ser passado varias lojas em um array)
+"store": "name store" - string 
+"price" : "price game in store" - float (10.00)
+
+```
+
+## /getstoregame
+Utilizado para selecionar todos os jogos de uma loja
+
+Type: <strong>get</strong>
+
+Dados esperado
+```
+um JSON:
+
+"name": "namestore" - string 
+
+```
+
+## /getgamestore
+Utilizado para selecionar todos as lojas de um jogo
+
+Type: <strong>get</strong>
+
+Dados esperado
+```
+um JSON:
+
+"name": "namestore" - string 
+
+```
+

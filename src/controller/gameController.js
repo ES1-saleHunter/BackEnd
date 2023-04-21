@@ -26,7 +26,6 @@ const register_game = async (req,res) => {
         describe: game.describe,
         link: game.link,
         Image: image,
-        price: game.price,
     }
     ).then(
     )
@@ -84,7 +83,6 @@ const update_game = async (req,res) => {
                 describe: game.describe,
                 link: game.link,
                 Image: game.Image,
-                price: game.price
             },
             {
              where: {name: game.name},

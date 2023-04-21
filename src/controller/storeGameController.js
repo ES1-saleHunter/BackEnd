@@ -4,8 +4,7 @@ const storemodel = require("../models/storeModel");
 const gamestore = require("../models/gameStoreModel");
 
 
-
-const relationships_game_stores = async (req,res) => {
+const relationships_game_stores = async (req,res, next) => {
     const storegame =  req.body;
     if(!storegame.store) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar a loja"}) 
     if(!storegame.game) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar o jogo"}) 
@@ -26,13 +25,14 @@ const relationships_game_stores = async (req,res) => {
         })  
     });
     if(store === null) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar a loja"}) 
-    await store.addGames(game ,{ through: gamestore });
+    await store.addGames(game ,{ 
+        through: gamestore,     
+    },
+    );
 
-    return res.status(200).send({
-        mensagem: `relacão entre ${storegame.game} <-> ${storegame.store} concluido`,
-    })
+    next();
 }
-const relationships_store_games = async (req,res) => {
+const relationships_store_games = async (req,res, next) => {
     const storegame =  req.body;
     if(!storegame.store) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar a loja"}) 
     if(!storegame.game) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar o jogo"}) 
@@ -54,11 +54,7 @@ const relationships_store_games = async (req,res) => {
     });
     if(store === null) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar a loja"}) 
     await game.addStores(store, { through: gamestore });
-
-    return res.status(200).send({
-        mensagem: `relacão entre ${storegame.game} <-> ${storegame.store} concluido`,
-    })
-
+    next();
 }
 
 const get_store_game = async (req,res) => {

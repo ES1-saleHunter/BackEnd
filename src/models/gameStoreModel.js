@@ -8,7 +8,11 @@ const gamestore = connecttion.define("gamestore", {
             primaryKey: true,
             autoIncrement: true,
             allowNull: false,
-        }
+        },
+        price:{
+            type: sequelize.FLOAT,
+            allowNull: true
+        },
     
 },{
     tableName: "gamestore",
