@@ -1,5 +1,7 @@
 const db = require("../connection/connectionbd");
 const gamemodel = require("../models/gameModel");
+const storemodel = require("../models/storeModel");
+const gamestore = require("../models/gameStoreModel");
 const fs      = require('fs');
 const multer = require("multer");
 
@@ -17,28 +19,27 @@ const delete_file = (filePath) => {
 
 const register_game = async (req,res) => {
     const image = req.file.path
-    
+
     const game = req.body;
     const newgame = await gamemodel.create({
         name: game.name,
         describe: game.describe,
         link: game.link,
         Image: image,
-        price: game.price
-    }).then( 
-        res.status(200).send({
-            mensagem: "jogo cadastrada com sucesso",
-            name: game.name,
-        }) 
-             
-   )
+        price: game.price,
+    }
+    ).then(
+    )
    .catch((error) => {
-        res.status(400).send({
+        return res.status(400).send({
         mensagem: "ERRO",
         error: error
        })  
    });
- 
+   res.status(200).send({
+    mensagem: "jogo cadastrada com sucesso",
+    name: game.name,
+    }) 
 }
 
 const get_game = async (req,res) => {

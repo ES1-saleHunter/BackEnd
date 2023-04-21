@@ -1,6 +1,6 @@
-const { FLOAT } = require("sequelize");
+
 const db = require("../connection/connectionbd");
-const gamemodel = require("../models/storeModel");
+const gamemodel = require("../models/gameModel");
 
 
 const parameter_empty_check_register = async (req,res,next) => {
@@ -21,11 +21,9 @@ const parameter_empty_check_register = async (req,res,next) => {
 } 
 const duplicate_game = async (req,res,next) => {
     const {name} = req.body;
-    const dublicate = await gamemodel.findOne({ where: { name: name } });
-    console.log(dublicate);
-    if (dublicate) return res.status(400).send({mensage: "game já cadastrado"});
+    const dublicate = await gamemodel.findOne({ where: {name: req.body.name} });
+    if (dublicate) return res.status(400).send({mensage: "jogo já cadastrado"});
     return next(); 
- 
 } 
 
 
