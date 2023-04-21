@@ -5,6 +5,7 @@ const app = express();
 const cors = require("cors");
 const userRoute= require("./router/userRoute");
 const storeRoute= require("./router/storeRouter");
+const path = require("path");
 
 // defindindo um padrão
 app.use(morgan('dev'));
@@ -12,9 +13,8 @@ app.use(cors());
 app.use(bodyparser.urlencoded({ extended: false}));
 app.use(bodyparser.json());
 app.use(express.json());
+app.use('/files', express.static(path.resolve(__dirname)));
 
-
-//rotas
 app.use(userRoute);
 app.use(storeRoute);
 

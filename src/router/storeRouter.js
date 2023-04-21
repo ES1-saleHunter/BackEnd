@@ -6,6 +6,5 @@ const imgupload = require("../middleware/imgUploadMiddleware");
 
 
 router.post("/registerStore", imgupload.upload_store.single('image'), storeMiddleware.parameter_empty_check_register,storeController.register_store);
-
-
+router.post("/getStore",storeController.get_store);
 module.exports = router;

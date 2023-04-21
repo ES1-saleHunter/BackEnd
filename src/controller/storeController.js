@@ -27,12 +27,26 @@ const register_store = async (req,res) => {
  
 }
 
-
+const get_store = async (req,res) => {
+    const {name} = req.body;
+    if(!name) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar a loja"}) 
+    const store = await storemodel.findOne({where: {name: name}}
+        ).then().catch((error) => {
+            return res.status(400).send({
+                mensagem: "ERRO - Falha ao encontrar a loja",
+                error: error
+            })  
+        });
+        if(store === null) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar a loja"}) 
+       
+        return res.status(200).send({store: store});
+};
 
 
 
 
 module.exports = {
-    register_store
+    register_store,
+    get_store
  
 }
