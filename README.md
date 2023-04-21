@@ -51,6 +51,9 @@ Com isso o sistema já vai estar rodando em http://localhost:3000
 
 # Documentação 
 
+
+# User
+
 ## /register
 Utilizado para cadastrar um usuarios 
 
@@ -100,4 +103,21 @@ um JSON:
 	"token": "usertoken" - string
 	"password": "userpassword" - string
 }
+```
+
+
+# Store
+
+## /registerStore
+Utilizado para resetar a senha do usuarios 
+
+Dados esperado
+```
+um form-data:
+
+"name": "nameStore" - string
+"describe": "describreStore" - string
+"link": "linkStore" - string
+"image": "logoStore" - file(png/jpeg)
+
 ```

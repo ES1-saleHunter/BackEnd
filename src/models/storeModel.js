@@ -24,7 +24,7 @@ const store = connecttion.define("store", {
         Image:{
             type: sequelize.STRING(500),
             allowNull: false
-        },
+        }
 },{
     tableName: "store",
     timestamps: false

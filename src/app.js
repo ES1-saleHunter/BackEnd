@@ -4,6 +4,7 @@ const bodyparser = require("body-parser");
 const app = express();
 const cors = require("cors");
 const userRoute= require("./router/userRoute");
+const storeRoute= require("./router/storeRouter");
 
 // defindindo um padrão
 app.use(morgan('dev'));
@@ -15,6 +16,9 @@ app.use(express.json());
 
 //rotas
 app.use(userRoute);
+app.use(storeRoute);
+
+
 
 
 
