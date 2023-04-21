@@ -157,3 +157,17 @@ Dados esperado
 ```
 NULL
 ```
+
+## /updatestore
+Utilizado para resetar a senha do usuarios 
+
+Type: <strong>PUT</strong> 
+
+Dados esperado
+```
+"name": "nameStore" - string
+"newname": "nameStore" - string
+"describe": "describreStore" - string
+"link": "linkStore" - string
+"image": "logoStore" - file(png/jpeg)
+```

@@ -56,12 +56,53 @@ const get_all_store = async (req,res) => {
         return res.status(200).send({store: store});
 };
 
+const update_store = async (req,res) => {
+    const  store = req.body; 
+    
+        const storeF = await storemodel.findOne({where: {name: store.name}});
+        if(storeF === null) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar a loja"});
+        if(!store.newname) return res.status(400).send({mensagem: "ERRO - novo nome não informado"});
+        if(store.newname == "") return res.status(400).send({mensagem: "ERRO - novo nome não informado"});
+        const updatestore = await storemodel.update(
+            {
+                name: store.newname,
+                describe: store.describe,
+                link: store.link,
+                Image: store.Image
+            },
+            {
+             where: {name: store.name},
+            }
+          ).then()
+        .catch((error) => {
+            res.status(400).send({
+                mensagem: "ERRO",
+                error: error
+            })  
+        
+        });
+
+        return res.status(200).send({
+            mensagem: "Loja editada com sucesso",
+            store: {
+                name: store.newname,
+                describe: store.describe,
+                link: store.link,
+                Image: store.Image
+            }
+        });
+};
+
+
+
+
 
 
 
 module.exports = {
     register_store,
     get_store,
-    get_all_store
+    get_all_store,
+    update_store
  
 }
