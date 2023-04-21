@@ -1,7 +1,7 @@
 const connecttion = require("../connection/connectionbd");
 const sequelize = require("sequelize");
-const storemodel = require("./storeModel");
-const gamestoremodel = require("./gameStoreModel");
+const store = require("./storeModel");
+const gamestore = require("./gameStoreModel");
 
 const game = connecttion.define("game", {
         id:{
@@ -35,27 +35,31 @@ const game = connecttion.define("game", {
     timestamps: false
 })
 
-game.belongsToMany(storemodel, {
+game.associations = (models) => {game.belongsToMany(store, {
     through:{
-        model:gamestoremodel
+        model: gamestore
     },
     foreignKey: "idgame",
     constraint: true
-})
-
-storemodel.belongsToMany(game, {
+}),
+game.hasMany(gamestore, {foreignKey: "idgame"});
+gamestore.belongsTo(game, {foreignKey: "idgame"});
+}
+store.associations = (models) => {store.belongsToMany(game, {
     through:{
-        model: gamestoremodel
+        model: gamestore
     },
     foreignKey: "idstore",
     constraint: true
-})
+}),
+store.hasMany(gamestore, {foreignKey: "idstore"});
+gamestore.belongsTo(store, {foreignKey: "idstore"});
+}
 
-game.hasMany(gamestoremodel, {foreignKey: "idgame"});
-gamestoremodel.belongsTo(game, {foreignKey: "idgame"});
 
-storemodel.hasMany(gamestoremodel, {foreignKey: "idstore"});
-gamestoremodel.belongsTo(storemodel, {foreignKey: "idstore"});
+
+
+
 
 
 module.exports = game;

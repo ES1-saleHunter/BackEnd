@@ -7,6 +7,7 @@ const cors = require("cors");
 const userRoute= require("./router/userRoute");
 const storeRoute= require("./router/storeRouter");
 const gameRoute= require("./router/gameRouter");
+const StoreGameRoute= require("./router/storeGameRouter");
 
 // defindindo um padrão
 app.use(morgan('dev'));
@@ -19,6 +20,7 @@ app.use('/files', express.static(path.resolve(__dirname)));
 app.use(userRoute);
 app.use(storeRoute);
 app.use(gameRoute);
+app.use(StoreGameRoute);
 
 
 
