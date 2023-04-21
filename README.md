@@ -57,6 +57,8 @@ Com isso o sistema já vai estar rodando em http://localhost:3000
 ## /register
 Utilizado para cadastrar um usuarios 
 
+Type: <strong>POST</strong>
+
 Dados esperado
 ```
 um JSON:
@@ -69,7 +71,10 @@ um JSON:
 ```
 
 ## /login
-Utilizado para login do usuarios 
+Utilizado para login do usuario
+
+
+Type: <strong>POST</strong>
 
 Dados esperado
 ```
@@ -84,6 +89,9 @@ um JSON:
 ## /recoverpassword
 Utilizado para recuperar a senha do usuarios 
 
+
+Type: <strong>POST</strong>
+
 Dados esperado
 ```
 um JSON:
@@ -94,6 +102,8 @@ um JSON:
 
 ## /resetpassword
 Utilizado para resetar a senha do usuarios 
+
+Type: <strong>POST</strong>
 
 Dados esperado
 ```
@@ -108,7 +118,9 @@ um JSON:
 
 # Store
 
-## /registerStore
+Type: <strong>POST</strong>
+
+## /registerstore
 Utilizado para resetar a senha do usuarios 
 
 Dados esperado
@@ -120,4 +132,28 @@ um form-data:
 "link": "linkStore" - string
 "image": "logoStore" - file(png/jpeg)
 
+```
+
+## /getonestore
+
+Type: <strong>POST</strong>
+
+Utilizado para resetar a senha do usuarios 
+
+Dados esperado
+```
+um JSON:
+{
+"name": "nameStore" - string
+}
+```
+
+## /getallstore
+Utilizado para resetar a senha do usuarios 
+
+Type: <strong>GET</strong> 
+
+Dados esperado
+```
+NULL
 ```

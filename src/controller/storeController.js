@@ -42,11 +42,26 @@ const get_store = async (req,res) => {
         return res.status(200).send({store: store});
 };
 
+const get_all_store = async (req,res) => {
+  
+    const store = await storemodel.findAll(
+        ).then().catch((error) => {
+            return res.status(400).send({
+                mensagem: "ERRO - Falha ao encontrar as lojas",
+                error: error
+            })  
+        });
+        if(store === null) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar as lojas"}) 
+       
+        return res.status(200).send({store: store});
+};
+
 
 
 
 module.exports = {
     register_store,
-    get_store
+    get_store,
+    get_all_store
  
 }
