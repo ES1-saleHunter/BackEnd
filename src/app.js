@@ -1,11 +1,12 @@
 const express = require("express");
 const morgan = require("morgan");
+const path = require("path");
 const bodyparser = require("body-parser");
 const app = express();
 const cors = require("cors");
 const userRoute= require("./router/userRoute");
 const storeRoute= require("./router/storeRouter");
-const path = require("path");
+const gameRoute= require("./router/gameRouter");
 
 // defindindo um padrão
 app.use(morgan('dev'));
@@ -17,6 +18,7 @@ app.use('/files', express.static(path.resolve(__dirname)));
 
 app.use(userRoute);
 app.use(storeRoute);
+app.use(gameRoute);
 
 
 

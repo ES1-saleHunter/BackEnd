@@ -165,6 +165,8 @@ Type: <strong>PUT</strong>
 
 Dados esperado
 ```
+um form-data:
+
 "name": "nameStore" - string
 "newname": "nameStore" - string
 "describe": "describreStore" - string
@@ -180,4 +182,75 @@ Type: <strong>DELETE</strong>
 Dados esperado
 ```
 "name": "nameStore" - string
+```
+
+# game
+
+Type: <strong>POST</strong>
+
+## /registergame
+Utilizado para resetar a senha do usuarios 
+
+Dados esperado
+```
+um form-data:
+
+"name": "namegame" - string
+"describe": "describregame" - string
+"price": "pricegame" - float (10.00)
+"link": "linkgame" - string
+"image": "logogame" - file(png/jpeg)
+
+```
+
+## /getonegame
+
+Type: <strong>POST</strong>
+
+Utilizado para resetar a senha do usuarios 
+
+Dados esperado
+```
+um JSON:
+{
+"name": "namegame" - string
+}
+```
+
+## /getallgame
+Utilizado para resetar a senha do usuarios 
+
+Type: <strong>GET</strong> 
+
+Dados esperado
+```
+NULL
+```
+
+## /updategame
+Utilizado para resetar a senha do usuarios 
+
+Type: <strong>PUT</strong> 
+
+Dados esperado
+```
+um form-data:
+
+"name": "namegame" - string
+"newname": "namegame" - string
+"describe": "describregame" - string
+"price": "pricegame" - float (10.00)
+"link": "linkgame" - string
+"image": "logogame" - file(png/jpeg)
+```
+
+## /deletegame
+Utilizado para resetar a senha do usuarios 
+
+Type: <strong>DELETE</strong> 
+
+Dados esperado
+```
+um JSON:
+"name": "namegame" - string
 ```
