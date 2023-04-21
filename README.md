@@ -171,3 +171,13 @@ Dados esperado
 "link": "linkStore" - string
 "image": "logoStore" - file(png/jpeg)
 ```
+
+## /deletestore
+Utilizado para resetar a senha do usuarios 
+
+Type: <strong>DELETE</strong> 
+
+Dados esperado
+```
+"name": "nameStore" - string
+```

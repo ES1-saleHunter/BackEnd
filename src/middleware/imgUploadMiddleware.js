@@ -1,6 +1,5 @@
 const multer = require("multer");
 
-
 const storage_store = multer.diskStorage({
     destination: function (req,file,cb){
         cb(null,'./src/uploads');
@@ -26,6 +25,19 @@ const upload_store = multer({
   fileFilter: fileFilter
 });
 
+
+const delete_file = (filePath) => {
+    fs.unlink(filePath, (error) => {
+        if (!error) {
+            console.log(false);
+        } else {
+            console.log('Erro ao deletar arquivo.');
+        }
+    });
+}
+
+
 module.exports = {
-    upload_store
+    upload_store,
+    delete_file
 }
