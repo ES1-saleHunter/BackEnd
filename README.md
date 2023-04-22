@@ -126,6 +126,16 @@ um JSON:
 	"token": "usertoken" - string
 }
 ```
+## /getallusers
+Utilizado para selecionar todos os usuarios
+
+Type: <strong>GET</strong> 
+
+Dados esperado
+```
+NULL
+```
+
 ## /updateuser
 Utilizado para atualizar os dados de um usuario 
 
@@ -291,7 +301,7 @@ um JSON:
 ```
 
 
-# Relação game com jogo
+# Relação game com loja
 
 
 ## /relationgametostores
