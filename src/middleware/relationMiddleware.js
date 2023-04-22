@@ -6,7 +6,7 @@ const gamestore = require("../models/gameStoreModel");
 const add_valor_relation = async (req,res) => {
     const  {price, ...date} = req.body; 
     
-    if(price === null) return res.status(400).send({mensagem: "valor não informado"});
+    if(!price) return res.status(400).send({mensagem: "valor não informado"});
     if(price == "") return res.status(400).send({mensagem: "valor não informado"});
     if(price.match(/^-?\d+\.\d+$/) === null) return res.send({mensage: 'preço incorreto'});
 

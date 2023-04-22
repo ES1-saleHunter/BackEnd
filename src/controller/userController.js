@@ -55,7 +55,7 @@ const login = async (req,res) => {
                     email: email,
                     name: name
                 },process.env.JWT_KEY,{
-                    expiresIn: "2h"
+                    expiresIn: "1h"
                 })
 
 
@@ -150,6 +150,7 @@ const reset_password = async (req,res) => {
 
 const get_user = async (req,res) => {
     const {token} = req.body;
+    console.log(req.user);
     if(!token) return res.status(400).send({mensagem: "ERRO - Token invalido"}) 
     const decodedToken = jwtoken.decode(token, {
         complete: true
