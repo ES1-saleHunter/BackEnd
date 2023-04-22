@@ -32,6 +32,20 @@ const register = async (req,res) => {
        });    
 };
 
+const get_all_users = async (req,res) => {
+  
+    const users = await usermodel.findAll(
+        ).then().catch((error) => {
+            return res.status(400).send({
+                mensagem: "ERRO - Falha ao buscar usuarios",
+                error: error
+            })  
+        });
+        if(users === null) return res.status(400).send({mensagem: "ERRO - Falha ao buscar usuarios"}) 
+
+        return res.status(200).send({users: users});
+};
+
 const login = async (req,res) => {
     const {email, password, name} = req.body;
     const user = await usermodel.findOne({where: {email: email}}
@@ -256,5 +270,6 @@ module.exports = {
     reset_password,
     get_user,
     update_user,
-    delete_user
+    delete_user,
+    get_all_users
 }
