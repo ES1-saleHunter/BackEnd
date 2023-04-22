@@ -14,7 +14,7 @@ const connection = new Sequelize.Sequelize(process.env.MYSQL_DB, process.env.MYS
      port: "3306"
 });
 
-connection.sync({ force: true })
+connection.sync({ force: false })
 .then(() => {
     console.log('re-sync done!')
 })

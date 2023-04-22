@@ -114,7 +114,44 @@ um JSON:
 	"password": "userpassword" - string
 }
 ```
+## /getuser
+Utilizado para selecionar um usuario 
 
+Type: <strong>GET</strong>
+
+Dados esperado
+```
+um JSON:
+{
+	"token": "usertoken" - string
+}
+```
+## /updateuser
+Utilizado para atualizar os dados de um usuario 
+
+Type: <strong>PUT</strong>
+
+Dados esperado
+```
+um JSON:
+{
+	"token": "usertoken" - string
+	"name" : "newnameuser" - string
+}
+```
+
+## /deleteuser
+Utilizado para deletar um usuario 
+
+Type: <strong>DELETE</strong>
+
+Dados esperado
+```
+um JSON:
+{
+	"token": "usertoken" - string
+}
+```
 
 # Store
 

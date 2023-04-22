@@ -148,10 +148,112 @@ const reset_password = async (req,res) => {
             
 };
 
+const get_user = async (req,res) => {
+    const {token} = req.body;
+    if(!token) return res.status(400).send({mensagem: "ERRO - Token invalido"}) 
+    const decodedToken = jwtoken.decode(token, {
+        complete: true
+       });
+    if(!decodedToken) return res.status(400).send({mensage: "Erro - Token invalido"}); 
 
+  
+    const user = await usermodel.findOne({where: {email: decodedToken.payload.email}}
+        ).then().catch((error) => {
+            return res.status(400).send({
+                mensagem: "ERRO - Falha ao encontrar o usuario",
+                error: error
+            })  
+        });
+        if(user === null) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar o usuario"}) 
+       
+        return res.status(200).send({user: user});
+};
+
+
+const update_user = async (req,res) => {
+
+    const  user = req.body; 
+     if(!user.token) return res.status(400).send({mensagem: "ERRO - Token invalido"}) 
+    const decodedToken = jwtoken.decode(user.token, {
+        complete: true
+       });
+
+    if(!decodedToken) return res.status(400).send({mensage: "Erro - Token invalido"}); 
+
+         const userf = await usermodel.findOne({where: {email: decodedToken.payload.email}}
+        ).then().catch((error) => {
+            return res.status(400).send({
+                mensagem: "ERRO - Falha ao encontrar o usuario",
+                error: error
+            })  
+        });
+        if(userf === null) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar o usuario"});
+        if(user.name == "") return res.status(400).send({mensage: "novo Nome do usuario não informado"}); 
+        if(!user.name) return res.status(400).send({mensage: "novo Nome do usuario não informado"}); 
+        const updateuser = await usermodel.update(
+            {
+                name: user.name,
+            },
+            {
+             where: {name: userf.name},
+            }
+          ).then()
+        .catch((error) => {
+            return res.status(400).send({
+                mensagem: "ERRO",
+                error: error
+            })  
+        
+        });
+
+        return res.status(200).send({
+            mensagem: "usuario editado com sucesso",
+        });
+};
+
+const delete_user = async (req,res) => {
+
+    const  user = req.body; 
+     if(!user.token) return res.status(400).send({mensagem: "ERRO - Token invalido"}) 
+    const decodedToken = jwtoken.decode(user.token, {
+        complete: true
+       });
+
+    if(!decodedToken) return res.status(400).send({mensage: "Erro - Token invalido"}); 
+
+    const userf = await usermodel.findOne({where: {email: decodedToken.payload.email}}
+        ).then().catch((error) => {
+            return res.status(400).send({
+                mensagem: "ERRO - Falha ao encontrar o usuario",
+                error: error
+            })  
+        });
+    
+        const updateuser = await usermodel.update(
+            {
+                state: false,
+            },
+            {
+             where: {name: userf.name},
+            }
+          ).then()
+        .catch((error) => {
+            return res.status(400).send({
+                mensagem: "ERRO",
+                error: error
+            })  
+        
+        });
+        return res.status(200).send({
+            mensagem: "usuario excluido com sucesso",
+        });
+};
 module.exports = {
     register,
     login,
     rec_password,
-    reset_password
+    reset_password,
+    get_user,
+    update_user,
+    delete_user
 }
