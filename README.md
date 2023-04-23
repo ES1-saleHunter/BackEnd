@@ -314,8 +314,10 @@ Dados esperado
 ```
 um JSON:
 
-"game": "namegame" - string
-"store": "namestore" - string (pode ser passado varias lojas em um array)
+"game": "name game" - string (pode ser passado varias lojas em um array)
+"store": "name store" - string 
+"price" : "price game in store" - float (10.00)
+"link"  : "link game in store"  - string
 
 ```
 
@@ -332,6 +334,7 @@ um JSON:
 "game": "name game" - string (pode ser passado varias lojas em um array)
 "store": "name store" - string 
 "price" : "price game in store" - float (10.00)
+"link"  : "link game in store"  - string
 
 ```
 
