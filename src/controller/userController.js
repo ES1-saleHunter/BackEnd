@@ -5,6 +5,8 @@ require("dotenv").config();
 const crypto = require("crypto");
 const brcypt = require("bcrypt");
 const jwtoken =require("jsonwebtoken");
+const { token } = require("morgan");
+const { channel } = require("diagnostics_channel");
 
 const register = async (req,res) => {
     const user = req.body;
@@ -266,7 +268,23 @@ const delete_user = async (req,res) => {
 
 const verification_online= async (req,res) => {
     const  user = req.body; 
-     if(!user.token) return res.status(400).send({mensagem: "ERRO - Token invalido"}) 
+     if(!user.token) return res.status(400).send({status: false}) ;
+
+    const SECRET_KEY= process.env.JWT_KEY;
+    if(!SECRET_KEY) {
+        return res.status(401).send({error: "erro no process.env do backend",
+        status: false});
+    }
+    try{
+        if(jwtoken.verify(user.token,SECRET_KEY)){
+            console.log({status: true}) 
+        } else {
+            return res.send({status: false})
+        }
+    }catch{
+        return res.send({status: false})
+    }
+
     const decodedToken = jwtoken.decode(user.token, {
         complete: true
        });
