@@ -21,7 +21,7 @@ const verificantion_delete = async (req,res,next) => {
                 error: error
             })  
         });
-    if(!user) return res.status(400).send({mensagem: "ERRO - Falha login"}) 
+    if(!users) return res.status(400).send({mensagem: "ERRO - Falha login"}) 
 
     if(!users.state) return res.status(400).send({mensagem: "ERRO - Falha login"}) 
     next();

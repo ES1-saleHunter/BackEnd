@@ -263,6 +263,28 @@ const delete_user = async (req,res) => {
             mensagem: "usuario excluido com sucesso",
         });
 };
+
+const verification_online= async (req,res) => {
+    const  user = req.body; 
+     if(!user.token) return res.status(400).send({mensagem: "ERRO - Token invalido"}) 
+    const decodedToken = jwtoken.decode(user.token, {
+        complete: true
+       });
+
+    if(!decodedToken) return res.status(400).send({mensage: "usuario off"}); 
+
+    const userf = await usermodel.findOne({where: {email: decodedToken.payload.email}}
+        ).then().catch((error) => {
+            return res.status(400).send({
+                mensagem: "usuario off",
+                error: error
+            })  
+        });
+    
+        return res.status(200).send({
+            mensagem: "logado",
+        });
+};
 module.exports = {
     register,
     login,
@@ -271,5 +293,6 @@ module.exports = {
     get_user,
     update_user,
     delete_user,
-    get_all_users
+    get_all_users,
+    verification_online
 }
