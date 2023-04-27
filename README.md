@@ -64,3 +64,16 @@ um JSON:
 	"password": "usersenha" - string
 }
 ```
+
+## /login
+Utilizado para login do usuarios 
+
+Dados esperado
+```
+um JSON:
+
+{
+	"email": "useremail" - string
+	"password": "usersenha" - string
+}
+```
