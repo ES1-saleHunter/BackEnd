@@ -114,7 +114,54 @@ um JSON:
 	"password": "userpassword" - string
 }
 ```
+## /getuser
+Utilizado para selecionar um usuario 
 
+Type: <strong>GET</strong>
+
+Dados esperado
+```
+um JSON:
+{
+	"token": "usertoken" - string
+}
+```
+## /getallusers
+Utilizado para selecionar todos os usuarios
+
+Type: <strong>GET</strong> 
+
+Dados esperado
+```
+NULL
+```
+
+## /updateuser
+Utilizado para atualizar os dados de um usuario 
+
+Type: <strong>PUT</strong>
+
+Dados esperado
+```
+um JSON:
+{
+	"token": "usertoken" - string
+	"name" : "newnameuser" - string
+}
+```
+
+## /deleteuser
+Utilizado para deletar um usuario 
+
+Type: <strong>DELETE</strong>
+
+Dados esperado
+```
+um JSON:
+{
+	"token": "usertoken" - string
+}
+```
 
 # Store
 
@@ -254,7 +301,7 @@ um JSON:
 ```
 
 
-# Relação game com jogo
+# Relação game com loja
 
 
 ## /relationgametostores
@@ -267,8 +314,10 @@ Dados esperado
 ```
 um JSON:
 
-"game": "namegame" - string
-"store": "namestore" - string (pode ser passado varias lojas em um array)
+"game": "name game" - string (pode ser passado varias lojas em um array)
+"store": "name store" - string 
+"price" : "price game in store" - float (10.00)
+"link"  : "link game in store"  - string
 
 ```
 
@@ -285,6 +334,7 @@ um JSON:
 "game": "name game" - string (pode ser passado varias lojas em um array)
 "store": "name store" - string 
 "price" : "price game in store" - float (10.00)
+"link"  : "link game in store"  - string
 
 ```
 

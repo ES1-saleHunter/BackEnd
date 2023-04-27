@@ -13,6 +13,10 @@ const gamestore = connecttion.define("gamestore", {
             type: sequelize.FLOAT,
             allowNull: true
         },
+        link:{
+            type: sequelize.STRING(500),
+            allowNull: true
+        },
     
 },{
     tableName: "gamestore",
