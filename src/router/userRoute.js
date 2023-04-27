@@ -11,7 +11,7 @@ router.post("/register",userMiddleware.parameter_empty_check_register, userMiddl
 router.post("/login",userMiddleware.parameter_empty_check_login, userMiddleware.verificantion_delete,userController.login);
 router.post("/recoverpassword",userController.rec_password);
 router.post("/resetpassword",userController.reset_password);
-router.get("/getuser", jwt_verification.jwt_verification,userController.get_user);
+router.post("/getuser", jwt_verification.jwt_verification,userController.get_user);
 router.put("/updateuser", jwt_verification.jwt_verification, userController.update_user);
 router.delete("/deleteuser", jwt_verification.jwt_verification,userController.delete_user);
 router.get("/getallusers", jwt_verification.jwt_verification,userMiddleware.verificantion_admin, userController.get_all_users);
