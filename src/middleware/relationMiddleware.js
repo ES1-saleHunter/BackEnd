@@ -8,7 +8,6 @@ const add_valor_relation = async (req,res) => {
     
     if(!price) return res.status(400).send({mensagem: "valor não informado"});
     if(price == "") return res.status(400).send({mensagem: "valor não informado"});
-    if(price.match(/^-?\d+\.\d+$/) === null) return res.send({mensage: 'preço incorreto'});
 
     if(!link) return res.status(400).send({mensagem: "Link do jogo não informado"});
     if(link == "") return res.status(400).send({mensagem: "Link do jogo não informado"});
