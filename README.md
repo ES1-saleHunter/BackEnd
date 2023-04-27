@@ -47,3 +47,20 @@ npm run dev
 ```
 
 Com isso o sistema já vai estar rodando em http://localhost:3000
+
+
+# Documentação 
+
+## /register
+Utilizado para cadastrar um usuarios 
+
+Dados esperado
+```
+um JSON:
+
+{
+	"name":"username" - string
+	"email": "useremail" - string
+	"password": "usersenha" - string
+}
+```
