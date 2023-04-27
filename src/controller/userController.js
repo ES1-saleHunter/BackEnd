@@ -1,6 +1,8 @@
 const db = require("../connection/connectionbd");
 const usermodel = require("../models/userModel");
+const nodemailer = require("./emailController");
 require("dotenv").config();
+const crypto = require("crypto");
 const brcypt = require("bcrypt");
 const jwtoken =require("jsonwebtoken");
 
@@ -13,7 +15,8 @@ const register = async (req,res) => {
             email: user.email,
             isadm: false,
             state: true,
-            password: hash
+            password: hash,
+            passwordResetToken: ''
         }).then(
              res.status(200).send({
                 mensagem: "usuario criado com sucesso",
@@ -55,6 +58,8 @@ const login = async (req,res) => {
                 },process.env.JWT_KEY,{
                     expiresIn: "2h"
                 })
+
+
                return res.status(200).send({
                     mensagem: "Autenticado com sucesso",
                     email: user.email,
@@ -70,7 +75,45 @@ const login = async (req,res) => {
 
 };
 
+
+const rec_password = async (req,res) => {
+    const {email} = req.body;
+    if(email == "") return res.status(400).send({mensage: "email do usuario não informado"}); 
+    const user = await usermodel.findOne({where: {email: email}}
+        ).then().catch((error) => {
+            return res.status(400).send({
+                mensagem: "ERRO - Falha",
+                error: error
+            })  
+        });
+        if(user === null) return res.status(400).send({mensagem: "ERRO - Falha"}) 
+        const token = jwtoken.sign({
+            email: email,
+        },process.env.JWT_KEY,{
+            expiresIn: "2h"
+        })
+ 
+            const updateUser = await usermodel.update(
+            {
+                passwordResetToken: token
+    
+            },
+            {
+              where: {email: email},
+            }
+          );
+
+
+        await nodemailer.rec_password(req,user.name,res,token);
+        return res.status(200).send({
+            mensagem: "Email enviado para recuperação da senha",
+            token: token
+        })        
+};
+
+
 module.exports = {
     register,
-    login
+    login,
+    rec_password
 }

@@ -21,6 +21,28 @@ const registration_email = async (req,res, next) =>{
     })
 }
 
+const rec_password = async (req,name,res,token) =>{
+    const {email} = req.body;
+    await emailsend.sendMail({
+        from: "SaleHunter <es1salehunter@gmail.com>",
+        to: email,
+        context: { token },
+        subject: "Recuperação de senha",
+        html: `<h1>Recuperação de senha, </h1> <p> <strong> Ola ${name}<strong> aqui está o token: ${token}`,
+        text: "${name} Seu cadastro em <strong> SaleHunter foi concluido com sucesso"
+    }).then(()=>{
+        console.log("email enviado");    
+        return 0;
+    }).catch((error)=>{
+        return res.status(400).send({
+            Mensagem : "email invalido",
+            error: error
+        });
+
+    })
+}
+
 module.exports ={
-    registration_email
+    registration_email,
+    rec_password
 }

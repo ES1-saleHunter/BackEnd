@@ -9,6 +9,8 @@ const jwt_verification = require("../middleware/jwt");
 
 router.post("/register",userMiddleware.parameter_empty_check_register, userMiddleware.duplicate_email, emailController.registration_email, userController.register);
 router.post("/login",userMiddleware.parameter_empty_check_login,userController.login);
+router.post("/recoverpassword",userController.rec_password);
+
 
 router.get("/teste", jwt_verification.jwt_verification ,(req,res) =>{res.send({mensage:"funcionou"})});//rota teste de token
 
