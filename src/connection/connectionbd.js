@@ -11,7 +11,13 @@ const connection = new Sequelize.Sequelize(process.env.MYSQL_DB, process.env.MYS
     {
      host: process.env.MYSQL_HOST,
      dialect: "mysql",
-     port: "3306"
+     port: process.env.MYSQL_PORT
 });
+
+connection.sync({ force: false })
+.then(() => {
+    console.log('re-sync done!')
+})
+
 
 module.exports = connection;
