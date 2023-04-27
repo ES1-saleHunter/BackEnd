@@ -166,14 +166,14 @@ const reset_password = async (req,res) => {
 
 const get_user = async (req,res) => {
     const {token} = req.body;
-    console.log(req.user);
+    
     if(!token) return res.status(400).send({mensagem: "ERRO - Token invalido"}) 
     const decodedToken = jwtoken.decode(token, {
         complete: true
        });
     if(!decodedToken) return res.status(400).send({mensage: "Erro - Token invalido"}); 
 
-  
+    console.log(req.user);
     const user = await usermodel.findOne({where: {email: decodedToken.payload.email}}
         ).then().catch((error) => {
             return res.status(400).send({
