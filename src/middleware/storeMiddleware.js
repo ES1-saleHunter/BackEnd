@@ -17,8 +17,8 @@ const parameter_empty_check_register = async (req,res,next) => {
 const duplicate_store = async (req,res,next) => {
     const {name} = req.body;
     const dublicate = await storemodel.findOne({ where: { name: name } });
-    if (dublicate === null) return next(); 
-    return res.status(400).send({mensage: "loja já cadastrado"});
+    if (dublicate) return res.status(400).send({mensage: "loja já cadastrado"});
+    return next(); 
 } 
 
 

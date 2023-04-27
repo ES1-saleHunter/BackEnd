@@ -1,9 +1,9 @@
 const connecttion = require("../connection/connectionbd");
 const sequelize = require("sequelize");
-const game = require("./gameModel");
+const store = require("./storeModel");
 const gamestore = require("./gameStoreModel");
 
-const store = connecttion.define("store", {
+const game = connecttion.define("game", {
         id:{
             type: sequelize.INTEGER,
             primaryKey: true,
@@ -27,30 +27,15 @@ const store = connecttion.define("store", {
             allowNull: false
         }
 },{
-    tableName: "store",
+    tableName: "game",
     timestamps: false
 })
-game.belongsToMany(store, {
-    through:{
-        model: gamestore
-    },
-    foreignKey: "idgame",
-    constraint: true
-}),
-game.hasMany(gamestore, {foreignKey: "idgame"});
-gamestore.belongsTo(game, {foreignKey: "idgame"});
-
-store.belongsToMany(game, {
-    through:{
-        model: gamestore
-    },
-    foreignKey: "idstore",
-    
-    constraint: true
-}),
-store.hasMany(gamestore, {foreignKey: "idstore"});
-gamestore.belongsTo(store, {foreignKey: "idstore"});
 
 
 
-module.exports = store;
+
+
+
+
+
+module.exports = game;

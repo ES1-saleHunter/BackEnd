@@ -25,19 +25,18 @@ const upload_store = multer({
   fileFilter: fileFilter
 });
 
+const upload_game = multer({
+  storage: storage_store,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: fileFilter
+});
 
-const delete_file = (filePath) => {
-    fs.unlink(filePath, (error) => {
-        if (!error) {
-            console.log(false);
-        } else {
-            console.log('Erro ao deletar arquivo.');
-        }
-    });
-}
 
 
 module.exports = {
     upload_store,
-    delete_file
+    upload_game
+ 
 }
