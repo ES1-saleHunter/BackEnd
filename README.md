@@ -51,8 +51,13 @@ Com isso o sistema já vai estar rodando em http://localhost:3000
 
 # Documentação 
 
+
+# User
+
 ## /register
 Utilizado para cadastrar um usuarios 
+
+Type: <strong>POST</strong>
 
 Dados esperado
 ```
@@ -66,7 +71,10 @@ um JSON:
 ```
 
 ## /login
-Utilizado para login do usuarios 
+Utilizado para login do usuario
+
+
+Type: <strong>POST</strong>
 
 Dados esperado
 ```
@@ -81,6 +89,9 @@ um JSON:
 ## /recoverpassword
 Utilizado para recuperar a senha do usuarios 
 
+
+Type: <strong>POST</strong>
+
 Dados esperado
 ```
 um JSON:
@@ -92,6 +103,8 @@ um JSON:
 ## /resetpassword
 Utilizado para resetar a senha do usuarios 
 
+Type: <strong>POST</strong>
+
 Dados esperado
 ```
 um JSON:
@@ -100,4 +113,71 @@ um JSON:
 	"token": "usertoken" - string
 	"password": "userpassword" - string
 }
+```
+
+
+# Store
+
+Type: <strong>POST</strong>
+
+## /registerstore
+Utilizado para resetar a senha do usuarios 
+
+Dados esperado
+```
+um form-data:
+
+"name": "nameStore" - string
+"describe": "describreStore" - string
+"link": "linkStore" - string
+"image": "logoStore" - file(png/jpeg)
+
+```
+
+## /getonestore
+
+Type: <strong>POST</strong>
+
+Utilizado para resetar a senha do usuarios 
+
+Dados esperado
+```
+um JSON:
+{
+"name": "nameStore" - string
+}
+```
+
+## /getallstore
+Utilizado para resetar a senha do usuarios 
+
+Type: <strong>GET</strong> 
+
+Dados esperado
+```
+NULL
+```
+
+## /updatestore
+Utilizado para resetar a senha do usuarios 
+
+Type: <strong>PUT</strong> 
+
+Dados esperado
+```
+"name": "nameStore" - string
+"newname": "nameStore" - string
+"describe": "describreStore" - string
+"link": "linkStore" - string
+"image": "logoStore" - file(png/jpeg)
+```
+
+## /deletestore
+Utilizado para resetar a senha do usuarios 
+
+Type: <strong>DELETE</strong> 
+
+Dados esperado
+```
+"name": "nameStore" - string
 ```

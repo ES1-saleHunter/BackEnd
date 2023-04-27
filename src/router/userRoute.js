@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controller/userController");
-const userMiddleware = require("../middleware/userMiddleware")
+const userMiddleware = require("../middleware/userMiddleware");
 const emailController = require("../controller/emailController");
 const jwt_verification = require("../middleware/jwt");
 
