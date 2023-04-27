@@ -78,21 +78,6 @@ um JSON:
 }
 ```
 
-
-## /login
-Utilizado para login do usuarios 
-
-Dados esperado
-```
-um JSON:
-
-{
-	"email": "useremail" - string
-	"password": "usersenha" - string
-}
-```
-
-
 ## /recoverpassword
 Utilizado para recuperar a senha do usuarios 
 
@@ -101,5 +86,18 @@ Dados esperado
 um JSON:
 {
 	"email": "useremail" - string
+}
+```
+
+## /resetpassword
+Utilizado para resetar a senha do usuarios 
+
+Dados esperado
+```
+um JSON:
+{
+	"email": "useremail" - string
+	"token": "usertoken" - string
+	"password": "userpassword" - string
 }
 ```
