@@ -16,14 +16,14 @@ const delete_file = (filePath) => {
 
 
 const register_store = async (req,res) => {
-    const image = req.file.path
+    //const image = req.file.path
     
     const store = req.body;
     const newStore = await storemodel.create({
         name: store.name,
         describe: store.describe,
         link: store.link,
-        Image: image
+        Image: ""
     }).then( 
         res.status(200).send({
             mensagem: "Loja cadastrada com sucesso",
@@ -70,7 +70,7 @@ const get_all_store = async (req,res) => {
 };
 
 const update_store = async (req,res) => {
-    const  store = req.body; 
+    const store = req.body; 
     
         const storeF = await storemodel.findOne({where: {name: store.name}});
         if(storeF === null) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar a loja"});
@@ -81,7 +81,7 @@ const update_store = async (req,res) => {
                 name: store.newname,
                 describe: store.describe,
                 link: store.link,
-                Image: store.Image
+                Image: ""
             },
             {
              where: {name: store.name},
@@ -101,7 +101,7 @@ const update_store = async (req,res) => {
                 name: store.newname,
                 describe: store.describe,
                 link: store.link,
-                Image: store.Image
+                Image: ""
             }
         });
 };
