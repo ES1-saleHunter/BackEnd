@@ -4,7 +4,7 @@ const storemodel = require("../models/storeModel");
 
 const parameter_empty_check_register = async (req,res,next) => {
         const store = req.body;
-        if (!req.file) return res.send({mensage: 'arquivo não carregado'});
+        //if (!req.file) return res.send({mensage: 'arquivo não carregado'});
         if (!req.body.describe) return res.send({mensage: "Descrição da loja não informada"});
         if (!req.body.name) return res.send({mensage: "Nome da loja não informada"});
         if (!req.body.link) return res.send({mensage: "Link da loja não informada"});

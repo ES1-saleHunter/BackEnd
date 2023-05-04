@@ -6,7 +6,7 @@ const gamemodel = require("../models/gameModel");
 const parameter_empty_check_register = async (req,res,next) => {
         const game = req.body;
        
-        if (!req.file) return res.send({mensage: 'arquivo não carregado'});
+        //if (!req.file) return res.send({mensage: 'arquivo não carregado'});
         if (!req.body.describe) return res.send({mensage: "Descrição da game não informada"});
         if (!req.body.name) return res.send({mensage: "Nome da game não informada"});
         if (!req.body.link) return res.send({mensage: "Link da game não informada"});

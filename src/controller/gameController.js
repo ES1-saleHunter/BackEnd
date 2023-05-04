@@ -18,14 +18,14 @@ const delete_file = (filePath) => {
 
 
 const register_game = async (req,res) => {
-    const image = req.file.path
+   // const image = req.file.path
 
     const game = req.body;
     const newgame = await gamemodel.create({
         name: game.name,
         describe: game.describe,
         link: game.link,
-        Image: image,
+        Image: "",
     }
     ).then(
     )
@@ -82,7 +82,7 @@ const update_game = async (req,res) => {
                 name: game.newname,
                 describe: game.describe,
                 link: game.link,
-                Image: game.Image,
+                Image: ""
             },
             {
              where: {name: game.name},
@@ -102,7 +102,7 @@ const update_game = async (req,res) => {
                 name:game.newname,
                 describe:game.describe,
                 link:game.link,
-                Image:game.Image
+                Image:""
             }
         });
 };
