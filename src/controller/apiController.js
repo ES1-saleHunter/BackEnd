@@ -197,7 +197,7 @@ const updatedbgames = async (req,res) =>{
                 });
             await relationships("nuuvem",game,gamedates)
         } 
-   const resgog = await gog.seachgame(element.dataValues.name)
+    const resgog = await gog.seachgame(element.dataValues.name)
      console.log(resgog)
         if(resgog[0] != undefined){
             const gamedates = await gog.getdata(resgog[0].name);
@@ -214,30 +214,28 @@ const updatedbgames = async (req,res) =>{
         const ressteam = await steam.seachgame(element.dataValues.name).catch((err) =>{
             return 1
         })
-        console.log(ressteam)
+        console.log
         if(ressteam.appid != undefined){
-            const gamedates = await steam.getdata(ressteam.appid).catch(()=> {return 1})
+            const gamedates = await steam.getdata(ressteam.appid)
             console.log(gamedates)
             const game = await gamemodel.findOne({where: {name: ressteam.name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()}}
             ).then().catch((error) => {
                 console.log("erro")
             });
             console.log(game)
-            await relationships("steam",game,gamedates).catch(()=> {return 1})
+            await relationships("steam",game,gamedates)
         }
 
     });
 
-    return res.status(200).send({message: "Atulizados com sucesso"})
+    return res.status(200).send("testando")
 }
+
 const updatedbgames2 = async () =>{
  
     const game = await gamemodel.findAll(
         ).then().catch((error) => {
-            return res.status(400).send({
-                mensagem: "ERRO - Falha ao puxar jogos",
-                error: error
-            })  
+            return 1  
         });
     game.forEach( async (element, i) => {
        const resnuuvem = await nuuvem.seachgame(element.dataValues.name)
@@ -253,7 +251,7 @@ const updatedbgames2 = async () =>{
                 });
             await relationships("nuuvem",game,gamedates)
         } 
-   const resgog = await gog.seachgame(element.dataValues.name)
+    const resgog = await gog.seachgame(element.dataValues.name)
      console.log(resgog)
         if(resgog[0] != undefined){
             const gamedates = await gog.getdata(resgog[0].name);
@@ -270,22 +268,27 @@ const updatedbgames2 = async () =>{
         const ressteam = await steam.seachgame(element.dataValues.name).catch((err) =>{
             return 1
         })
-        console.log(ressteam)
+        console.log
         if(ressteam.appid != undefined){
-            const gamedates = await steam.getdata(ressteam.appid).catch(()=> {return 1})
+            const gamedates = await steam.getdata(ressteam.appid).catch(()=> {
+                return 1
+            });
             console.log(gamedates)
             const game = await gamemodel.findOne({where: {name: ressteam.name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()}}
             ).then().catch((error) => {
-                console.log("erro")
-            });
+                return 1
+            })
             console.log(game)
-            await relationships("steam",game,gamedates).catch(()=> {return 1})
+            await relationships("steam",game,gamedates).catch(()=> {
+                return 1
+            });
         }
 
     });
 
-    return 0;
+    return 0
 }
+
 
 module.exports ={
     updateStores,
