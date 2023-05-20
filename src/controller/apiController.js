@@ -162,11 +162,17 @@ const updateStores = async (req,res, next) =>{
         namesgamesbd.push(element.dataValues.name)
     });
     if(store == "nuuvem"){
-        await nuuvemaddgame(namesgamesbd,store);
+        await nuuvemaddgame(namesgamesbd,store).catch(() => {
+            return 1
+        });
     }else if(store == "steam"){
-        await steamaddgame(namesgamesbd,store)
+        await steamaddgame(namesgamesbd,store).catch(() => {
+            return 1
+        })
     }else if(store == "gog"){
-        await gogaddgame(namesgamesbd,store)
+        await gogaddgame(namesgamesbd,store).catch(() => {
+            return 1
+        })
     }else{
         return res.status(202).send({message: `A loja ${store} não foi configurada para receber atualizaçoes automaticas`})
     }  
