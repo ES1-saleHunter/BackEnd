@@ -9,7 +9,6 @@ const gog = require("../api/apigog/apigog")
 
 
 const relationships = async (name,game,gamedata) => {  
-    console.log(game)
     const gamePromisse = await gamemodel.findOne({where: {name: game.dataValues.name}}
         ).then().catch((error) => {
             console.log("erro")  
@@ -98,7 +97,6 @@ const gogaddgame = async (namesgamesbd,store) => {
     });   
     promotion.forEach(async (element) => {
         const gamedates = await gog.getdata(element);
-        console.log(gamedates)
         if(namesgamesbd.indexOf(gamedates.name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()) > -1){
             console.log("já existe")
             const game = await gamemodel.findOne({where: {name: gamedates.name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()}}
@@ -126,8 +124,6 @@ const steamaddgame = async (namesgamesbd,store) => {
     });   
     promotion.forEach(async (element) => {
         const gamedates = await steam.getdata(element);
-        console.log(gamedates.name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, ""))
-        console.log(namesgamesbd.indexOf("teste"))
         if(namesgamesbd.indexOf(gamedates.name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()) > -1){
             console.log("já existe")
             const game = await gamemodel.findOne({where: {name: gamedates.name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()}}
@@ -149,7 +145,6 @@ const steamaddgame = async (namesgamesbd,store) => {
 
 const updateStores = async (req,res, next) =>{
     const {store} = req.body;
-    console.log(store)
     const game = await gamemodel.findAll(
         ).then().catch((error) => {
             return res.status(400).send({
@@ -176,7 +171,7 @@ const updateStores = async (req,res, next) =>{
     }else{
         return res.status(202).send({message: `A loja ${store} não foi configurada para receber atualizaçoes automaticas`})
     }  
-    await updatedbgames2()
+    await updatedbgames2(store)
     return res.status(200).send({message: `jogos da loja ${store} atualizados com sucesso`})
 }
 
@@ -204,7 +199,6 @@ const updatedbgames = async (req,res) =>{
             await relationships("nuuvem",game,gamedates)
         } 
     const resgog = await gog.seachgame(element.dataValues.name)
-     console.log(resgog)
         if(resgog[0] != undefined){
             const gamedates = await gog.getdata(resgog[0].name);
             const game = await gamemodel.findOne({where: {name: resgog[0].name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()}}
@@ -220,15 +214,14 @@ const updatedbgames = async (req,res) =>{
         const ressteam = await steam.seachgame(element.dataValues.name).catch((err) =>{
             return 1
         })
-        console.log
         if(ressteam.appid != undefined){
             const gamedates = await steam.getdata(ressteam.appid)
-            console.log(gamedates)
+          
             const game = await gamemodel.findOne({where: {name: ressteam.name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()}}
             ).then().catch((error) => {
                 console.log("erro")
             });
-            console.log(game)
+          
             await relationships("steam",game,gamedates)
         }
 
@@ -237,59 +230,63 @@ const updatedbgames = async (req,res) =>{
     return res.status(200).send("testando")
 }
 
-const updatedbgames2 = async () =>{
+const updatedbgames2 = async (store) =>{
  
     const game = await gamemodel.findAll(
         ).then().catch((error) => {
             return 1  
         });
+
+         
     game.forEach( async (element, i) => {
-       const resnuuvem = await nuuvem.seachgame(element.dataValues.name)
-        if(resnuuvem[0] != undefined){
-            const gamedates = await nuuvem.getdata(resnuuvem[0].name);
-
-            const game = await gamemodel.findOne({where: {name: resnuuvem[0].name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()}}
-                ).then().catch((error) => {
-                    return resnuuvem.status(400).send({
-                        mensagem: "ERRO - Falha ao encontrar o jogo",
-                        error: error
-                    })  
-                });
-            await relationships("nuuvem",game,gamedates)
-        } 
-    const resgog = await gog.seachgame(element.dataValues.name)
-     console.log(resgog)
-        if(resgog[0] != undefined){
-            const gamedates = await gog.getdata(resgog[0].name);
-            const game = await gamemodel.findOne({where: {name: resgog[0].name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()}}
-                ).then().catch((error) => {
-                    return res.status(400).send({
-                        mensagem: "ERRO - Falha ao encontrar o jogo",
-                        error: error
-                    })  
-                });
-
-            await relationships("gog",game,gamedates)
-        } 
-        const ressteam = await steam.seachgame(element.dataValues.name).catch((err) =>{
-            return 1
-        })
-        console.log
-        if(ressteam.appid != undefined){
-            const gamedates = await steam.getdata(ressteam.appid).catch(()=> {
-                return 1
-            });
-            console.log(gamedates)
-            const game = await gamemodel.findOne({where: {name: ressteam.name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()}}
-            ).then().catch((error) => {
+        if(store == "nuuvem"){
+            const resnuuvem = await nuuvem.seachgame(element.dataValues.name)
+            if(resnuuvem[0] != undefined){
+                const gamedates = await nuuvem.getdata(resnuuvem[0].name);
+                const game = await gamemodel.findOne({where: {name: resnuuvem[0].name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()}}
+                    ).then().catch((error) => {
+                        return resnuuvem.status(400).send({
+                            mensagem: "ERRO - Falha ao encontrar o jogo",
+                            error: error
+                        })  
+                    });
+                await relationships("nuuvem",game,gamedates)
+            } 
+        }else if(store == "steam"){
+            const ressteam = await steam.seachgame(element.dataValues.name).catch((err) =>{
                 return 1
             })
-            console.log(game)
-            await relationships("steam",game,gamedates).catch(()=> {
-                return 1
-            });
+            if(ressteam.appid != undefined){
+                const gamedates = await steam.getdata(ressteam.appid).catch(()=> {
+                    return 1
+                });
+               
+                const game = await gamemodel.findOne({where: {name: ressteam.name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()}}
+                ).then().catch((error) => {
+                    return 1
+                })
+              
+                await relationships("steam",game,gamedates).catch(()=> {
+                    return 1
+                });
+            }
+        }else if(store == "gog"){
+            const resgog = await gog.seachgame(element.dataValues.name)
+               if(resgog[0] != undefined){
+                   const gamedates = await gog.getdata(resgog[0].name);
+                   const game = await gamemodel.findOne({where: {name: resgog[0].name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()}}
+                       ).then().catch((error) => {
+                           return res.status(400).send({
+                               mensagem: "ERRO - Falha ao encontrar o jogo",
+                               error: error
+                           })  
+                       });
+       
+                   await relationships("gog",game,gamedates)
+               } 
+        }else{
+            return res.status(202).send({message: `A loja ${store} não foi configurada para receber atualizaçoes automaticas`})
         }
-
     });
 
     return 0
