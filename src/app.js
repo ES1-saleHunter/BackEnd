@@ -8,6 +8,7 @@ const userRoute= require("./router/userRoute");
 const storeRoute= require("./router/storeRouter");
 const gameRoute= require("./router/gameRouter");
 const StoreGameRoute= require("./router/storeGameRouter");
+const apiRouter = require("./router/apiRouter");
 
 // defindindo um padrão
 app.use(morgan('dev'));
@@ -21,6 +22,7 @@ app.use(userRoute);
 app.use(storeRoute);
 app.use(gameRoute);
 app.use(StoreGameRoute);
+app.use(apiRouter);
 
 
 
