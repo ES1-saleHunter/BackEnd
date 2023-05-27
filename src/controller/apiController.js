@@ -21,10 +21,13 @@ const relationships = async (name,game,gamedata) => {
             error: error
         })  
     });
+  
     const gamestore = {
         game: gamePromisse.dataValues.name,
         store: name,
-        price: gamedata.price.Discountprice,
+        originalprice: gamedata.price.originalprice,
+        discountprice: gamedata.price.Discountprice,
+        discountpercentage: gamedata.price.Discountpercentage,
         link: gamedata.link
     }
     
