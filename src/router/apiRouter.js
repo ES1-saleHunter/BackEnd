@@ -6,6 +6,6 @@ const userMiddleware = require("../middleware/userMiddleware");
 const jwt_verification = require("../middleware/jwt");
 
 router.put("/updategamebank", jwt_verification.jwt_verification, userMiddleware.verificantion_admin, apiMiddleware.checkShop, apis.updateStores);
-router.put("/updateteste",apis.updatedbgames);
+router.put("/updategamebanks",jwt_verification.jwt_verification, userMiddleware.verificantion_admin, apis.updatedbgames);
 
 module.exports = router;
