@@ -5,6 +5,25 @@ const pathlinkgame = "https://www.gog.com/game/"
 const pathlinkpromocao = "https://www.gog.com/en/games/discounted"
 const pathlinkseach = "https://www.gog.com/en/games"
 
+const seachimage = async (nameGame) => {
+    let link = pathlinkseach;
+    let res = await axios.get(link, { params: { query: nameGame,  order: 'score', hideDLCs : "true"} })
+    let $ = await cheerio.load(res.data);
+
+    let urlimage;
+    let selector = $('product-tile');  
+    
+    selector.each((i, item) => {
+        var $item = $(item);
+        var linkgame = $item.find('source').attr('srcset');
+        if(linkgame == undefined){
+            urlimage = "erro image"
+            return urlimage
+        }
+        urlimage =  linkgame.substring(0, linkgame.indexOf(","));
+    });
+    return urlimage;
+}
 
 const getgender = async (nameGame) => {
     let name = nameGame.toLowerCase().replace(/[ ]/g, '-');
@@ -85,14 +104,18 @@ const getdata = async (nameGame) => {
     let selectordescribe = $('.description')
     let selectorimg = $('.productcard-player__logo')
     
-    let img = selectorimg.attr('srcset')
+    let img = await seachimage(selectorname.text().trim())
+    if(img == "erro image"){
+        img = selectorimg.attr('srcset')
 
-    if(img == undefined){
-        img = "erro image"
+        if(img == undefined){
+            img = "erro image"
+        }
+        else {
+            img = img.slice(0, img.indexOf('1x')).trim()
+        }
     }
-    else {
-        img = img.slice(0, img.indexOf('1x')).trim()
-    }
+
     return {
         name: selectorname.text().trim(),
         describe: selectordescribe.text().replace('\n', '').trim(),
@@ -142,11 +165,10 @@ const seachgame = async (nameGame) => {
 }
 
 const teste = async () => {
-    let jogo = await getgender("the_witcher_3_wild_hunt_game_of_the_year_edition");
+    let jogo = await getdata("the_witcher_3_wild_hunt");
     console.log(jogo)
     
 }
-
 
 module.exports ={
     getgender,

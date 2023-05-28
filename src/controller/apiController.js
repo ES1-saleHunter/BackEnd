@@ -11,9 +11,10 @@ const epic = require("../api/apiepicgames/epicapi")
 
 const relationships = async (name,game,gamedata) => {
     if(!game) return 1
+    if(game.mensagem) return 1
     const gamePromisse = await gamemodel.findOne({where: {name: game.dataValues.name}}
         ).then().catch((error) => {
-            console.log("erro")  
+            return 1 
         });
 
     const store = await storemodel.findOne({where: {name: name}}
@@ -57,10 +58,10 @@ const registergame = async (data) => {
     ).then(
     )
    .catch((error) => {
-        return res.status(400).send({
+        return {
         mensagem: "ERRO",
         error: error
-       })  
+       }
    });
 
    return newgame;
