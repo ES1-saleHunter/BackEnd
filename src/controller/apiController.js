@@ -234,70 +234,16 @@ const updatedbgames = async (req,res) =>{
             return 1  
         });
   
-    game.forEach( async (element, i) => {
-        
-            const resnuuvem = await nuuvem.seachgame(element.dataValues.name)
-            if(resnuuvem[0] != undefined){
-                const gamedates = await nuuvem.getdata(resnuuvem[0].name);
-                const game = await gamemodel.findOne({where: {name: resnuuvem[0].name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()}}
-                    ).then().catch((error) => {
-                        return resnuuvem.status(400).send({
-                            mensagem: "ERRO - Falha ao encontrar o jogo",
-                            error: error
-                        })  
-                    });
-                await relationships("nuuvem",game,gamedates)
-            } 
-        
-            const ressteam = await steam.seachgame(element.dataValues.name).catch((err) =>{
-                return 1
-            })
-            if(ressteam.appid != undefined){
-                const gamedates = await steam.getdata(ressteam.appid).catch(()=> {
-                    return 1
-                });
-               
-                const game = await gamemodel.findOne({where: {name: ressteam.name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()}}
-                ).then().catch((error) => {
-                    return 1
-                })
-              
-                await relationships("steam",game,gamedates).catch(()=> {
-                    return 1
-                });
-            }
-       
-            const resgog = await gog.seachgame(element.dataValues.name)
-               if(resgog[0] != undefined){
-                   const gamedates = await gog.getdata(resgog[0].name);
-                   const game = await gamemodel.findOne({where: {name: resgog[0].name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()}}
-                       ).then().catch((error) => {
-                           return res.status(400).send({
-                               mensagem: "ERRO - Falha ao encontrar o jogo",
-                               error: error
-                           })  
-                       });
-       
-                   await relationships("gog",game,gamedates)
-               } 
-        
-            const gamedates = await epic.getdata(element.dataValues.name);
-            if(gamedates == 1) return 1
-            const game = await gamemodel.findOne({where: {name: gamedates.name.replace(/[-]/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()}}
-                ).then().catch((error) => {
-                    return res.status(400).send({
-                        mensagem: "ERRO - Falha ao encontrar o jogo",
-                        error: error
-                    })  
-                });
-            await relationships("epic games",game,gamedates)
-             
+    const lojas = await storemodel.findAll().then().catch((error) => {
+        return 1  
     });
-
+    lojas.forEach(async (element) =>{
+        await updatedbgames2(element.dataValues.name, true)
+    })
     return res.status(200).send({message: `lojas atualizadas com sucesso`})
 }
 
-const updatedbgames2 = async (store) =>{
+const updatedbgames2 = async (store, isloja = false) =>{
  
     const game = await gamemodel.findAll(
         ).then().catch((error) => {
@@ -364,7 +310,12 @@ const updatedbgames2 = async (store) =>{
             await relationships("epic games",game,gamedates)
         }
         else{
-            return res.status(202).send({message: `A loja ${store} não foi configurada para receber atualizaçoes automaticas`})
+
+            if(isloja){
+                return 0
+            }else{
+                return res.status(202).send({message: `A loja ${store} não foi configurada para receber atualizaçoes automaticas`})
+            }
         }
     });
 
