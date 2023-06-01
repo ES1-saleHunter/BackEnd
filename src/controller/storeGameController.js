@@ -24,6 +24,7 @@ const relationships_game_stores = async (req,res, next) => {
             error: error
         })  
     });
+
     if(store === null) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar a loja"}) 
     await store.addGames(game ,{ 
         through: gamestore,     
