@@ -1,5 +1,5 @@
 
-import fetch from "node-fetch";
+const {fetch} = require("node-fetch");
 const axios = require('axios');
 const pathlinkpromocao = "https://store.steampowered.com/"
 const pathlinkseach = "https://store.epicgames.com/graphql"
