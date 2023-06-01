@@ -1,4 +1,5 @@
 
+import fetch from "node-fetch";
 const axios = require('axios');
 
 const pathlinkpromocao = "https://store.steampowered.com/"
