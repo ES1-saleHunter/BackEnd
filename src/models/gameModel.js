@@ -1,7 +1,6 @@
 const connecttion = require("../connection/connectionbd");
 const sequelize = require("sequelize");
-const store = require("./storeModel");
-const gamestore = require("./gameStoreModel");
+
 
 const game = connecttion.define("game", {
         id:{
@@ -30,12 +29,6 @@ const game = connecttion.define("game", {
     tableName: "game",
     timestamps: false
 })
-
-
-
-
-
-
 
 
 module.exports = game;

@@ -9,7 +9,15 @@ const gamestore = connecttion.define("gamestore", {
             autoIncrement: true,
             allowNull: false,
         },
-        price:{
+        originalprice:{
+            type: sequelize.FLOAT,
+            allowNull: true
+        },
+        discountprice:{
+            type: sequelize.FLOAT,
+            allowNull: true
+        },
+        discountpercentage:{
             type: sequelize.FLOAT,
             allowNull: true
         },
@@ -17,7 +25,6 @@ const gamestore = connecttion.define("gamestore", {
             type: sequelize.STRING(500),
             allowNull: true
         },
-    
 },{
     tableName: "gamestore",
     timestamps: false

@@ -1,6 +1,7 @@
 const connecttion = require("../connection/connectionbd");
 const sequelize = require("sequelize");
-
+const game = require("./gameModel");
+const gameuser = require("./gameuserModel");
 
 const user = connecttion.define("user", {
         id:{
@@ -33,5 +34,27 @@ const user = connecttion.define("user", {
     tableName: "user",
     timestamps: false
 })
+
+game.belongsToMany(user, {
+    through:{
+        model: gameuser
+    },
+    foreignKey: "idgame",
+    constraint: true
+}),
+game.hasMany(gameuser, {foreignKey: "idgame"});
+gameuser.belongsTo(game, {foreignKey: "idgame"});
+
+user.belongsToMany(game, {
+    through:{
+        model: gameuser
+    },
+    foreignKey: "iduser",
+    
+    constraint: true
+}),
+user.hasMany(gameuser, {foreignKey: "iduser"});
+gameuser.belongsTo(user, {foreignKey: "iduser"});
+
 
 module.exports = user;
