@@ -21,6 +21,10 @@ const game = connecttion.define("game", {
             type: sequelize.STRING(500),
             allowNull: false
         },
+        likes:{
+            type: sequelize.INTEGER,
+            allowNull: false
+        },
         Image:{
             type: sequelize.STRING(500),
             allowNull: false
