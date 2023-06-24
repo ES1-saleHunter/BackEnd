@@ -26,6 +26,7 @@ const register_game = async (req,res) => {
         describe: game.describe,
         link: game.link,
         Image: "",
+        likes: 0
     }
     ).then(
     )
@@ -82,7 +83,8 @@ const update_game = async (req,res) => {
                 name: game.newname,
                 describe: game.describe,
                 link: game.link,
-                Image: ""
+                Image: "",
+                likes: gameF.likes
             },
             {
              where: {name: game.name},
@@ -116,6 +118,76 @@ const filter_game = async (req,res) => {
         if (game.length === 0) return res.status(400).send({ mensagem: "ERRO - Falha ao encontrar o jogo" });
         return res.status(200).send({ game: game });
 };
+const update_game_likes = async (req,res) => {
+    const  game = req.body; 
+
+        const gameF = await gamemodel.findByPk(game.idgame);
+        if(gameF === null) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar o jogo"});
+    
+
+           console.log(gameF.dataValues)
+      const updategame = await gamemodel.update(
+            {
+                name: gameF.dataValues.name,
+                describe: gameF.dataValues.describe,
+                link: gameF.dataValues.link,
+                Image: gameF.dataValues.Image,
+                likes: gameF.dataValues.likes + 1
+            },
+            {
+             where: {name: gameF.dataValues.name},
+            }
+          ).then()
+        .catch((error) => {
+            return res.status(400).send({
+                mensagem: "ERRO",
+                error: error
+            })  
+        
+        });
+
+        return res.status(200).send({
+            mensagem: "Like adiciona com sucesso",
+        });
+};
+
+const remove_game_likes = async (req,res) => {
+    const  game = req.body; 
+
+        const gameF = await gamemodel.findByPk(game.idgame);
+        if(gameF === null) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar o jogo"});
+    
+
+           console.log(gameF.dataValues)
+        let likes = gameF.dataValues.likes - 1
+           if(likes < 0){
+                likes = 0;
+           }
+      const updategame = await gamemodel.update(
+            {
+                name: gameF.dataValues.name,
+                describe: gameF.dataValues.describe,
+                link: gameF.dataValues.link,
+                Image: gameF.dataValues.Image,
+                likes: likes
+            },
+            {
+             where: {name: gameF.dataValues.name},
+            }
+          ).then()
+        .catch((error) => {
+            return res.status(400).send({
+                mensagem: "ERRO",
+                error: error
+            })  
+        
+        });
+
+            return res.status(200).send({
+                mensagem: "Like removido com sucesso",
+            });
+};
+
 
 const delete_game = async (req,res) => {
     const  {name} = req.body; 
@@ -149,9 +221,11 @@ const delete_game = async (req,res) => {
 module.exports = {
     register_game,
     get_game,
+    update_game_likes,
     get_all_game,
     update_game,
+    delete_game,
     filter_game,
-    delete_game
+    remove_game_likes
  
 }
