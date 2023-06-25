@@ -107,6 +107,15 @@ const update_game = async (req,res) => {
         });
 };
 
+const filter_game = async (req,res) => {
+    const { name, describe } = req.query;
+    const where = {};
+        if (name) where.name = name;
+        if (describe) where.describe = describe;
+        const game = await gamemodel.findAll({ where });
+        if (game.length === 0) return res.status(400).send({ mensagem: "ERRO - Falha ao encontrar o jogo" });
+        return res.status(200).send({ game: game });
+};
 
 const delete_game = async (req,res) => {
     const  {name} = req.body; 
@@ -142,6 +151,7 @@ module.exports = {
     get_game,
     get_all_game,
     update_game,
+    filter_game,
     delete_game
  
 }
