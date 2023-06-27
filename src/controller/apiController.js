@@ -82,6 +82,7 @@ const registergame = async (data) => {
         describe: auxdesc,
         link: '',
         Image: data.image,
+        likes: 0
     }
     ).then(
     )
