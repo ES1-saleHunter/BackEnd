@@ -7,6 +7,7 @@ const brcypt = require("bcrypt");
 const jwtoken =require("jsonwebtoken");
 const { token } = require("morgan");
 const { channel } = require("diagnostics_channel");
+const { Op } = require('sequelize');
 
 const register = async (req,res) => {
     const user = req.body;
@@ -303,6 +304,19 @@ const verification_online= async (req,res) => {
             mensagem: "logado",
         });
 };
+const filter_user = async (req,res) => {
+    const { name } = req.query;
+    const where = {};
+    if (name)  {
+        where.name = {
+            [Op.like]: `%${name}%` 
+        };
+    }
+
+    const users = await usermodel.findAll({ where });
+    return res.status(200).send({ users: users });
+};
+
 module.exports = {
     register,
     login,
@@ -312,5 +326,6 @@ module.exports = {
     update_user,
     delete_user,
     get_all_users,
-    verification_online
+    verification_online,
+    filter_user
 }
