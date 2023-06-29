@@ -72,7 +72,7 @@ const get_all_store = async (req,res) => {
 const update_store = async (req,res) => {
     const store = req.body; 
     
-        const storeF = await storemodel.findOne({where: {name: store.name}});
+        const storeF = await storemodel.findOne({where: {id: store.id}});
         if(storeF === null) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar a loja"});
         if(!store.newname) return res.status(400).send({mensagem: "ERRO - novo nome não informado"});
         if(store.newname == "") return res.status(400).send({mensagem: "ERRO - novo nome não informado"});
@@ -84,7 +84,7 @@ const update_store = async (req,res) => {
                 Image: ""
             },
             {
-             where: {name: store.name},
+             where: {name: storeF.name},
             }
           ).then()
         .catch((error) => {
