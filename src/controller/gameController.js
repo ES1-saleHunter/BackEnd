@@ -73,7 +73,7 @@ const get_all_game = async (req,res) => {
 const update_game = async (req,res) => {
     const  game = req.body; 
     
-        const gameF = await gamemodel.findOne({where: {name: game.name}});
+        const gameF = await gamemodel.findOne({where: {id: game.id}});
         if(gameF === null) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar o jogo"});
         if(!game.newname) return res.status(400).send({mensagem: "ERRO - novo nome não informado"});
         if(game.newname == "") return res.status(400).send({mensagem: "ERRO - novo nome não informado"});
@@ -85,7 +85,7 @@ const update_game = async (req,res) => {
                 Image: ""
             },
             {
-             where: {name: game.name},
+             where: {name: gameF.name},
             }
           ).then()
         .catch((error) => {
@@ -97,13 +97,8 @@ const update_game = async (req,res) => {
         });
 
         return res.status(200).send({
-            mensagem: "jogo editada com sucesso",
-            game: {
-                name:game.newname,
-                describe:game.describe,
-                link:game.link,
-                Image:""
-            }
+            mensagem: "jogo editado com sucesso",
+            game : updategame
         });
 };
 
