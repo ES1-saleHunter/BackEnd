@@ -4,6 +4,7 @@ const storemodel = require("../models/storeModel");
 const gamestore = require("../models/gameStoreModel");
 const fs      = require('fs');
 const multer = require("multer");
+const { Op } = require('sequelize');
 
 
 const delete_file = (filePath) => {
@@ -67,7 +68,15 @@ const get_all_game = async (req,res) => {
             })  
         });
         if(game === null) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar o jogo"}) 
-       
+        // game.sort();
+        game.sort(function(a, b) {
+            if(a.name < b.name) {
+              return -1;
+            } else {
+              return true;
+            }
+          });
+          
         return res.status(200).send({game: game});
 };
 
@@ -192,11 +201,25 @@ const remove_game_likes = async (req,res) => {
 const filter_game = async (req,res) => {
     const { name, describe } = req.query;
     const where = {};
-        if (name) where.name = name;
-        if (describe) where.describe = describe;
-        const game = await gamemodel.findAll({ where });
-        if (game.length === 0) return res.status(400).send({ mensagem: "ERRO - Falha ao encontrar o jogo" });
-        return res.status(200).send({ game: game });
+    if (name)  {
+        where.name = {
+            [Op.like]: `%${name}%` 
+        };
+    }
+    // if (describe) {
+    //     where.describe = {
+    //         [Op.like]: `%${describe}%`
+    //     };
+    // }
+    const game = await gamemodel.findAll({ where });
+    let games = [];
+    for (let i = 0; i < game.length; i++) {
+        const gameInstance = await gamemodel.findByPk(game[i].id, {
+            include: storemodel
+        });
+        games.push(gameInstance);
+    }
+    return res.status(200).send({ games: games });
 };
 
 const update_game_likes = async (req,res) => {
