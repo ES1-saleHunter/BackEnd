@@ -199,7 +199,6 @@ const remove_game_likes = async (req,res) => {
 };
 
 
-
 const filter_game = async (req,res) => {
     const { name, describe } = req.query;
     const where = {};
@@ -297,6 +296,7 @@ const remove_game_likes = async (req,res) => {
 
 
 
+
 const delete_game = async (req,res) => {
     const  {name} = req.body; 
     
@@ -332,7 +332,10 @@ module.exports = {
     update_game_likes,
     get_all_game,
     update_game,
-    filter_game,
+
     delete_game,
+    filter_game,
     remove_game_likes
+ 
+
 }

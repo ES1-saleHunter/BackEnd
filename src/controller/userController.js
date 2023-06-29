@@ -305,12 +305,15 @@ const verification_online= async (req,res) => {
         });
 };
 const filter_user = async (req,res) => {
-    const { name } = req.query;
+    const { name, state } = req.query;
     const where = {};
     if (name)  {
         where.name = {
             [Op.like]: `%${name}%` 
         };
+    }
+    if (state) {
+        where.state = state;
     }
 
     const users = await usermodel.findAll({ where });
