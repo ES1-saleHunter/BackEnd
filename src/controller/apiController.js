@@ -1,12 +1,20 @@
 const db = require("../connection/connectionbd");
 const gamemodel = require("../models/gameModel");
 const storemodel = require("../models/storeModel");
-const gamestore = require("../models/gameStoreModel");
+const gamestoreprice = require("../models/gameStorePriceModel");
 
 const nuuvem = require("../api/apinuuvem/apinuuvem")
 const steam = require("../api/apisteam/apisteam")
 const gog = require("../api/apigog/apigog")
 const epic = require("../api/apiepicgames/epicapi")
+
+function dataAtualFormatada(){
+    var data = new Date(),
+        dia  = data.getDate().toString().padStart(2, '0'),
+        mes  = (data.getMonth()+1).toString().padStart(2, '0'), //+1 pois no getMonth Janeiro começa com zero.
+        ano  = data.getFullYear();
+    return dia+"/"+mes+"/"+ano;
+}
 
 
 const relationships = async (name,game,gamedata) => {
@@ -40,6 +48,26 @@ const relationships = async (name,game,gamedata) => {
     ).catch((err) => {
         console.log("erro");
     });
+
+    let price = gamedata.price.originalprice;
+
+    if(gamedata.price.Discountpercentage > 0){
+        price = gamedata.price.Discountprice;
+    }
+    let date = dataAtualFormatada();
+    const relationexist = await gamestoreprice.findOne({where:{idgame: gamePromisse.dataValues.id, date: date, idstore:store.dataValues.id }})
+    console.log(relationexist)
+    if(relationexist != null) return 0;
+    const newgame = await gamestoreprice.create({
+        idstore: store.dataValues.id,
+        idgame: gamePromisse.dataValues.id,
+        discountprice: price,
+        date: date,
+    }
+    ).then(
+    )
+   .catch((error) => {  
+   });
 }
 
 const registergame = async (data) => {
@@ -54,6 +82,7 @@ const registergame = async (data) => {
         describe: auxdesc,
         link: '',
         Image: data.image,
+        likes: 0
     }
     ).then(
     )

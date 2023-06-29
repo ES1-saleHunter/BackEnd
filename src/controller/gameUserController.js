@@ -97,11 +97,19 @@ const get_user_game = async (req,res) => {
     if(users === null) return res.status(400).send({mensagem: "ERRO - Falha ao encontrar usuario"}) 
   
     const user = await usermodel.findByPk(users.id, {
-        include: gamemodel
+        include: gameusers
     })
+    let games = []
+    for (let index = 0; index < user.dataValues.gameusers.length; index++) {
+        const element = user.dataValues.gameusers[index].dataValues.idgame;
+        games.push(await gamemodel.findByPk(element))
+        
+    }
 
     return res.status(200).send({
-        user
+        user: user.dataValues,
+        games: games
+
     })
 }
 
