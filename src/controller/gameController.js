@@ -61,6 +61,7 @@ const get_game = async (req,res) => {
 const get_all_game = async (req,res) => {
   
     const game = await gamemodel.findAll(
+        {order: [['name', 'ASC']]}
         ).then().catch((error) => {
             return res.status(400).send({
                 mensagem: "ERRO - Falha ",
@@ -198,6 +199,7 @@ const remove_game_likes = async (req,res) => {
 };
 
 
+
 const filter_game = async (req,res) => {
     const { name, describe } = req.query;
     const where = {};
@@ -291,6 +293,7 @@ const remove_game_likes = async (req,res) => {
                 mensagem: "Like removido com sucesso",
             });
 };
+
 
 
 
